@@ -1,13 +1,15 @@
 var request = require('request');
 var secret = require('./config').secret;
+var url = require('./config').url;
+var user = require('./config').user;
 
-var bodyData = '{' +
-    '    jql: \'assignee = isanchez AND status != closed AND status != done AND project != MSSF\'' +
+var bodyData = '{' + `
+        jql: \'assignee = ${user} AND status != closed AND status != done AND project != MSSF\'`
     '}';
 
 var options = {
     method: 'GET',
-    url: 'https://masterstream.atlassian.net/rest/api/3/filter',
+    url: url,
     headers: {
         'Accept': 'application/json',
         'Authorization': `Basic ${secret}`
