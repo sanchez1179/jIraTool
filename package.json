@@ -1,0 +1,15 @@
+{
+  "name": "newjira",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ismael Sanchez",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "request": "^2.88.0"
+  }
+}
