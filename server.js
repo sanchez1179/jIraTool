@@ -1,11 +1,6 @@
 var request = require('request');
 var secret = require('./config').secret;
 var url = require('./config').url;
-var user = require('./config').user;
-
-var bodyData = '{' + `
-        jql: \'assignee = ${user} AND status != closed AND status != done AND project != MSSF\'`
-    '}';
 
 var options = {
     method: 'GET',
@@ -13,8 +8,7 @@ var options = {
     headers: {
         'Accept': 'application/json',
         'Authorization': `Basic ${secret}`
-    },
-    body: bodyData
+    }
 };
 
 request(options, function (error, response, body) {
@@ -22,5 +16,13 @@ request(options, function (error, response, body) {
     console.log(
         'Response: ' + response.statusCode + ' ' + response.statusMessage
     );
-    console.log(JSON.parse(body));
+
+    var results = JSON.parse(body);
+    for(var i = 0; i < results.issues.length; i++) {
+        var keys = results.issues[i].key;
+        var status = results.issues[i].fields.status.name;
+        console.log(status);
+    }
+
+
 });
