@@ -1,8 +1,8 @@
-var request = require('request');
-var secret = require('./config').secret;
-var url = require('./config').url;
+let request = require('request');
+let secret = require('./config').secret;
+let url = require('./config').url;
 
-var options = {
+let options = {
     method: 'GET',
     url: url,
     headers: {
@@ -16,11 +16,10 @@ request(options, function (error, response, body) {
     console.log(
         'Response: ' + response.statusCode + ' ' + response.statusMessage
     );
-
-    var results = JSON.parse(body);
-    for(var i = 0; i < results.issues.length; i++) {
-        var keys = results.issues[i].key;
-        var status = results.issues[i].fields.status.name;
+    let results = JSON.parse(body);
+    for(let i = 0; i < results.issues.length; i++) {
+        let keys = results.issues[i].key;
+        let status = results.issues[i].fields.status.name;
         console.log(status);
     }
 

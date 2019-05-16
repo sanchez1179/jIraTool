@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "react-redux": "^7.0.3",
     "request": "^2.88.0"
   }
 }
