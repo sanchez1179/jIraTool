@@ -5,12 +5,16 @@ import {createStore} from 'redux';
 import './index.css';
 import App from './App';
 import 'tachyons';
+import {getBugs} from './jql';
 import * as serviceWorker from './serviceWorker';
 
 const rootReducer = {};
 
-//const store = createStore(rootReducer)
-ReactDOM.render( <App/>, document.getElementById('root'));
+const store = createStore(rootReducer)
+ReactDOM.render(
+    <Provider store={store}>
+    <App/>
+    </Provider>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

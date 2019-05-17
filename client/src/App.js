@@ -1,19 +1,18 @@
 import React, {Component} from 'react';
 import logo from './logo.svg';
 import {connect} from 'react-redux';
-import getBugs from './jql'
+import {getBugs} from './jql'
 import './App.css';
 
-// const mapStateToProps = (state) => {
-//     return{
-//
-//     }
-// }
-//
+const mapStateToProps = (state) => {
+    return {
+        dateBegin: state.dateBegin,
+        dateEnd: state.dateEnd
+    }
+}
+
 // const mapDispatchToProps = (dispatch) => {
-//     return{
-//
-//     }
+//     getBugs: () => dispatch(getBugs(newDate));
 // }
 
 
@@ -21,7 +20,9 @@ class App extends Component {
     constructor(){
         super();
         this.state = {
-            date: ""
+            dateBegin: '',
+            dateEnd: '',
+            submitted: false
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -37,7 +38,7 @@ class App extends Component {
                 dateBegin: this.state.dateBegin,
                 dateEnd: this.state.dateEnd
             }
-            this.props.getBugs(newDate);
+        this.props.getBugs(newDate);
         }
     render() {
         return (
@@ -71,4 +72,4 @@ class App extends Component {
     }
 }
 
-export default App;
+export default connect(mapStateToProps, {getBugs})(App)
