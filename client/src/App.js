@@ -1,19 +1,22 @@
 import React, {Component} from 'react';
+import {bindActionCreators} from 'redux';
 import logo from './logo.svg';
 import {connect} from 'react-redux';
-import {getBugs} from './jql'
+import {getBugz} from './actions';
+
 import './App.css';
 
 const mapStateToProps = (state) => {
     return {
         dateBegin: state.dateBegin,
-        dateEnd: state.dateEnd
+        dateEnd: state.dateEnd,
+        submittted: state.submitted
     }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//     getBugs: () => dispatch(getBugs(newDate));
-// }
+// const mapDispatchToProps = (dispatch, props) => bindActionCreators({
+//     getBugz: () => getBugs(props.dateBegin)
+// }, dispatch)
 
 
 class App extends Component {
@@ -22,25 +25,27 @@ class App extends Component {
         this.state = {
             dateBegin: '',
             dateEnd: '',
-            submitted: false
+            submitted: 'false'
         }
         this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        this.onClick = this.onClick.bind(this);
     }
 
     onChange(e) {
         this.setState({[e.target.name]: e.target.value});
     }
 
-    onSubmit (e) {
+    onClick (e) {
        e.preventDefault();
             const newDate = {
                 dateBegin: this.state.dateBegin,
-                dateEnd: this.state.dateEnd
+                dateEnd: this.state.dateEnd,
             }
-        this.props.getBugs(newDate);
-        }
+        this.props.dispatch(getBugz(newDate));
+    }
+
     render() {
+
         return (
 
             <div className="center mw6-ns mw5">
@@ -64,12 +69,18 @@ class App extends Component {
                             onChange={this.onChange}
                         />
                             <small id="name-desc" className="f6 black-60 db mb2">Helper text for the form control.</small>
-                            <button type="submit" className="f6 link dim br-pill ph3 pv2 mb2 dib white bg-black " href="#0">Submit</button>
+                            <button onClick={this.onClick} className="f6 link dim br-pill ph3 pv2 mb2 dib white bg-black " href="#0">Submit</button>
                     </div>
                 </form>
+                <div>
+                    <h1>hello:</h1>
+                    <p>{this.state.submitted}</p>
+                    <p>{this.state.dateBegin}</p>
+                    <p>{this.state.dateEnd}</p>
+                </div>
             </div>
         )
     }
 }
 
-export default connect(mapStateToProps, {getBugs})(App)
+export default connect(mapStateToProps)(App)

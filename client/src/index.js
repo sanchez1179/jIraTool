@@ -5,11 +5,10 @@ import {createStore} from 'redux';
 import './index.css';
 import App from './App';
 import 'tachyons';
-import {getBugs} from './jql';
+import {getBugs} from './reducers'
 import * as serviceWorker from './serviceWorker';
 
-const rootReducer = {};
-
+const rootReducer = getBugs;
 const store = createStore(rootReducer)
 ReactDOM.render(
     <Provider store={store}>
