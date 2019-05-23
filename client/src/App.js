@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import logo from './logo.svg';
 import {connect} from 'react-redux';
-import {getBugz} from './actions';
+import {updateBeginDate, updateEndDate, submit} from './actions';
 
 import './App.css';
 
@@ -10,46 +10,28 @@ const mapStateToProps = (state) => {
     return {
         dateBegin: state.dateBegin,
         dateEnd: state.dateEnd,
-        submittted: state.submitted
+        submitted: state.submitted
     }
 }
+
+const mapDispatchToProps = {
+    updateBeginDate,
+    updateEndDate,
+    submit
+};
 
 // const mapDispatchToProps = (dispatch, props) => bindActionCreators({
 //     getBugz: () => getBugs(props.dateBegin)
 // }, dispatch)
 
 
-class App extends Component {
-    constructor(){
-        super();
-        this.state = {
-            dateBegin: '',
-            dateEnd: '',
-            submitted: 'false'
-        }
-        this.onChange = this.onChange.bind(this);
-        this.onClick = this.onClick.bind(this);
-    }
-
-    onChange(e) {
-        this.setState({[e.target.name]: e.target.value});
-    }
-
-    onClick (e) {
-       e.preventDefault();
-            const newDate = {
-                dateBegin: this.state.dateBegin,
-                dateEnd: this.state.dateEnd,
-            }
-        this.props.dispatch(getBugz(newDate));
-    }
-
-    render() {
-
-        return (
-
+const App = ({dateBegin, dateEnd, submitted, updateEndDate, updateBeginDate, submit}) => (
             <div className="center mw6-ns mw5">
-                <form className="pa4 black-80" onSubmit={this.onSubmit}>
+                <form className="pa4 black-80" onSubmit={e => {
+                  e.preventDefault();
+                  submit();
+                }}
+                >
                     <div className="measure">
                         <label  className="f6 b db mb2"> Date </label>
                         <input
@@ -57,30 +39,32 @@ class App extends Component {
                             className="input-reset ba b--black-20 pa2 mb2 db w-100"
                             type="text"
                             aria-describedby="name-desc"
-                            value = {this.state.dateBegin}
-                            onChange={this.onChange}
+                            value = {dateBegin}
+                            onChange= {e => {
+                              updateBeginDate(e.target.value)
+                            }}
                         />
                         <input
                             name="dateEnd"
                             className="input-reset ba b--black-20 pa2 mb2 db w-100"
                             type="text"
                             aria-describedby="name-desc"
-                            value = {this.state.dateEnd}
-                            onChange={this.onChange}
+                            value = {dateEnd}
+                            onChange= {(e) => (
+                              updateEndDate(e.target.value)
+                            )}
                         />
                             <small id="name-desc" className="f6 black-60 db mb2">Helper text for the form control.</small>
-                            <button onClick={this.onClick} className="f6 link dim br-pill ph3 pv2 mb2 dib white bg-black " href="#0">Submit</button>
+                            <button type="submit" className="f6 link dim br-pill ph3 pv2 mb2 dib white bg-black ">Submit</button>
                     </div>
                 </form>
                 <div>
                     <h1>hello:</h1>
-                    <p>{this.state.submitted}</p>
-                    <p>{this.state.dateBegin}</p>
-                    <p>{this.state.dateEnd}</p>
+                    <p>{submitted ? 'IS TRUE' : 'IS FALSE'}</p>
+                    <p>{dateBegin}</p>
+                    <p>{dateEnd}</p>
                 </div>
             </div>
         )
-    }
-}
 
-export default connect(mapStateToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(App)

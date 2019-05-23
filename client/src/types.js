@@ -1,1 +1,3 @@
 export const SUBMITTED = 'SUBMITTED';
+export const CHANGE_DATE_BEGIN = 'CHANGE_DATE_BEGIN';
+export const CHANGED_DATE_END = 'CHANGED_DATE_END';

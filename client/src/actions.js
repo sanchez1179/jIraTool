@@ -1,17 +1,15 @@
-import {SUBMITTED} from './types';
-const INITIALIZE = 'INITIALIZE'
+import {SUBMITTED, CHANGE_DATE_BEGIN, CHANGED_DATE_END} from './types';
 
-export const getBugz = (newDate) => {
-    return({
-        type: SUBMITTED,
-        newDate
-    })
-}
+export const updateBeginDate = (newDate) => ({
+  type: 'CHANGE_DATE_BEGIN',
+  newDate
+})
 
-export const initialize = () => {
-    return({
-        type: INITIALIZE,
-    })
-}
+export const updateEndDate = (newDate) => ({
+  type: 'CHANGED_DATE_END',
+  newDate
+})
 
-
+export const submit = () => ({
+  type: 'SUBMITTED'
+})
