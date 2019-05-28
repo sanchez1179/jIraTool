@@ -10,7 +10,8 @@ const mapStateToProps = (state) => {
     return {
         dateBegin: state.dateBegin,
         dateEnd: state.dateEnd,
-        submitted: state.submitted
+        submitted: state.submitted,
+        results: state.results
     }
 }
 
@@ -25,11 +26,15 @@ const mapDispatchToProps = {
 // }, dispatch)
 
 
-const App = ({dateBegin, dateEnd, submitted, updateEndDate, updateBeginDate, submit}) => (
+const App = ({dateBegin, dateEnd, submitted, updateEndDate, updateBeginDate, submit, results}) => (
             <div className="center mw6-ns mw5">
                 <form className="pa4 black-80" onSubmit={e => {
                   e.preventDefault();
-                  submit();
+                     let newDate = {
+                        dateBegin: dateBegin,
+                        dateEnd: dateEnd
+                    }
+                  submit(newDate);
                 }}
                 >
                     <div className="measure">
@@ -63,6 +68,7 @@ const App = ({dateBegin, dateEnd, submitted, updateEndDate, updateBeginDate, sub
                     <p>{submitted ? 'IS TRUE' : 'IS FALSE'}</p>
                     <p>{dateBegin}</p>
                     <p>{dateEnd}</p>
+                    <p>{results ? results.map(function(result){return<p key={result}>{result}</p>}): 'nothing here'}</p>
                 </div>
             </div>
         )
